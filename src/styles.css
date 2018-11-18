@@ -54,3 +54,31 @@ div.price {
 .card-body.content {
     font-size: 13px;
 }
+
+.modal.opened {
+    display: block !important;
+    background: rgba(0,0,0,0.55);
+}
+
+.container-modal {
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+.container-modal>.row {
+    height: 100%;
+}
+
+.card-body {
+    position: relative;
+}
+
+
+.alertsContainer {
+    z-index: 9999;
+}

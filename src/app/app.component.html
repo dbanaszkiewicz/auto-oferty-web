@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <span class="navbar-text">
              <ul class="navbar-nav">
-                 <li>
+                 <li (click)="openRegisterModal()">
                      <a href="#"><i class="fas fa-user"></i> Rejestracja</a>
                  </li>
-                 <li>
+                 <li (click)="openLoginModal()">
                      <a href="#"><i class="fas fa-sign-in-alt"></i> Logowanie</a>
                  </li>
             </ul>
@@ -20,3 +20,9 @@
 <div class="container-fluid">
     <router-outlet></router-outlet>
 </div>
+
+<app-login [(visible)]="openedLoginModal" (registerModal)="openRegisterModal()" (onClose)="onCloseLoginModal()"></app-login>
+<app-register [(visible)]="openedRegisterModal" (loginModal)="openLoginModal()" (onClose)="onCloseRegisterModal()"></app-register>
+
+
+<app-alerts></app-alerts>
