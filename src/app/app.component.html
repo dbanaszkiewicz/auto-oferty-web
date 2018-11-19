@@ -6,7 +6,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <span class="navbar-text">
-             <ul class="navbar-nav">
+             <ul class="navbar-nav" *ngIf="isLogged === false">
                  <li (click)="openRegisterModal()">
                      <a href="#"><i class="fas fa-user"></i> Rejestracja</a>
                  </li>
@@ -14,15 +14,31 @@
                      <a href="#"><i class="fas fa-sign-in-alt"></i> Logowanie</a>
                  </li>
             </ul>
-        </span>
+            <ul class="navbar-nav" *ngIf="isLogged === true">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        {{user.name}}<br /><small>{{user.email}}</small>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#" (click)="logout()">Wyloguj się</a>
+                    </div>
+                </li>
+          </ul>
+            </span>
     </div>
 </nav>
 <div class="container-fluid">
     <router-outlet></router-outlet>
 </div>
 
-<app-login [(visible)]="openedLoginModal" (registerModal)="openRegisterModal()" (onClose)="onCloseLoginModal()"></app-login>
-<app-register [(visible)]="openedRegisterModal" (loginModal)="openLoginModal()" (onClose)="onCloseRegisterModal()"></app-register>
+<app-login [(visible)]="openedLoginModal" (registerModal)="openRegisterModal()" (onLogin)="onLogin()"
+           (onClose)="onCloseLoginModal()"></app-login>
+<app-register [(visible)]="openedRegisterModal" (loginModal)="openLoginModal()"
+              (onClose)="onCloseRegisterModal()"></app-register>
 
 
 <app-alerts></app-alerts>

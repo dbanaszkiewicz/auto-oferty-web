@@ -82,3 +82,14 @@ div.price {
 .alertsContainer {
     z-index: 9999;
 }
+
+.alertsRow>.messagepanel {
+    height: 100% !important;
+    margin-left: 50px;
+}
+
+.alertsRow>.iconpanel {
+    padding: 0 !important;
+    position: absolute;
+    height: 100% !important;
+}

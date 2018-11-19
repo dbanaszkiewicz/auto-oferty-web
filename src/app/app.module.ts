@@ -15,6 +15,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import {ApiService} from './services/api/api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AlertsModule} from 'angular-alert-module';
+import {UserService} from './services/user.service';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import {AlertsModule} from 'angular-alert-module';
         AlertsModule.forRoot()
     ],
     providers: [
-        ApiService
+        ApiService,
+        UserService
     ],
     bootstrap: [AppComponent]
 })

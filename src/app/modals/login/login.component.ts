@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, OnChanges, EventEmitter, HostListener} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import * as $ from 'jquery';
 import {ApiService} from '../../services/api/api.service';
@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     @Input() visible: boolean;
     @Output() registerModal: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() onClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() onLogin: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     email: string;
     password: string;
@@ -55,12 +56,12 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        this.apiService.userLogin(this.email, this.password).toPromise().then((value) => {
-            alert('Zostałeś zalogowany!');
+        this.apiService.userLogin(this.email, this.password).then((value) => {
+            this.alerts.setMessage('Zostałeś zalogowany!', 'success');
             this.loading = false;
+            this.onLogin.emit(true);
             this.close(null, false);
         }, reason => {
-            this.alerts.setDefaults('timeout', 0);
             this.alerts.setMessage(reason.error.error.message, 'error');
             this.loading = false;
         });

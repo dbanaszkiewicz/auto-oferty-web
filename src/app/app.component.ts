@@ -1,4 +1,7 @@
 import {Component} from '@angular/core';
+import {UserData, UserService} from './services/user.service';
+import {AlertsComponent, AlertsModule, AlertsService} from 'angular-alert-module';
+import {AlertsConfigData} from 'angular-alert-module/lib/alerts.config';
 
 @Component({
     selector: 'app-root',
@@ -9,6 +12,14 @@ export class AppComponent {
     title = 'auto-oferty-web';
     openedLoginModal = false;
     openedRegisterModal = false;
+    user: UserData = new UserData();
+    isLogged;
+
+    constructor(private userService: UserService, private alerts: AlertsService) {
+        this.userService.fetchUserData().then(() => {
+            this.updateUserInfoFromService();
+        });
+    };
 
     openLoginModal() {
         this.openedLoginModal = true;
@@ -24,5 +35,23 @@ export class AppComponent {
 
     onCloseRegisterModal() {
         this.openedRegisterModal = false;
+    }
+
+    onLogin() {
+        this.userService.fetchUserData().then(() => {
+            this.updateUserInfoFromService()
+        });
+    }
+
+    logout() {
+        this.userService.logout().then(() => {
+            this.updateUserInfoFromService();
+            this.alerts.setMessage('Wylogowano...', 'success');
+        });
+    }
+
+    private updateUserInfoFromService() {
+        this.user = this.userService.userData;
+        this.isLogged = this.userService.isLogged;
     }
 }
