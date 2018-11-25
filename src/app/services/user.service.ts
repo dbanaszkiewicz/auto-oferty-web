@@ -30,10 +30,18 @@ export class UserService {
       }
   }
 
+  public login(email: string, password: string): Promise<object> {
+      return this.apiService.userLogin(email, password);
+  }
+
   public async logout() {
       await this.apiService.userLogout();
       this.isLogged = false;
       this.userData = new UserData();
+  }
+
+  public register(email: string, name: string, password: string): Promise<object> {
+      return this.apiService.register(email, name, password);
   }
 }
 

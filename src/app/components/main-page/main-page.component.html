@@ -7,22 +7,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xl-3 col-md-2 col-sm-6">
+        <div class="col-xl-3 col-md-3 col-sm-6">
             <ng-select (change)="onChangeBrand()" (clear)="onChangeBrand()" [disabled]="brands == null" [(ngModel)]="brand" placeholder="Wybierz markę">
                 <ng-option *ngFor="let item of brands" [value]="item.slug">{{item.name}}</ng-option>
             </ng-select>
         </div>
-        <div class="col-xl-3 col-md-2 col-sm-6">
+        <div class="col-xl-3 col-md-3 col-sm-6">
             <ng-select (change)="onChangeModel()" (clear)="onChangeModel()" [disabled]="models == null" [(ngModel)]="model" placeholder="Wybierz model">
                 <ng-option *ngFor="let item of models" [value]="item.slug">{{item.name}}</ng-option>
             </ng-select>
         </div>
-        <div class="col-xl-3 col-md-2 col-sm-6">
+        <div class="col-xl-3 col-md-3 col-sm-6">
             <ng-select [disabled]="versions == null" [(ngModel)]="version" placeholder="Wybierz wersję">
                 <ng-option *ngFor="let item of versions" [value]="item.slug">{{item.name}}</ng-option>
             </ng-select>
         </div>
-        <div class="col-xl-3 col-md-2 col-sm-6">
+        <div class="col-xl-3 col-md-3 col-sm-6">
             <button class="btn btn-dark form-control" style="margin-top: 15px;">Szukaj!</button>
         </div>
     </div>

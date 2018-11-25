@@ -24,13 +24,13 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@ng-select/ng-select/themes/material.theme.css",
+              "node_modules/mdbootstrap/css/bootstrap.min.css",
               "node_modules/mdbootstrap/css/mdb.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/mdbootstrap/js/bootstrap.min.js",
               "node_modules/mdbootstrap/js/mdb.min.js"
             ]
           },

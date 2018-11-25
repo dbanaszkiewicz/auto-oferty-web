@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import * as $ from 'jquery';
-import {ApiService} from '../../services/api/api.service';
 import {AlertsService} from 'angular-alert-module';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-login',
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     loading = false;
 
     constructor(
-        private apiService: ApiService,
+        private userService: UserService,
         private alerts: AlertsService
     ) { }
 
@@ -56,7 +56,8 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        this.apiService.userLogin(this.email, this.password).then((value) => {
+        console.log(this.email);
+        this.userService.login(this.email, this.password).then((value) => {
             this.alerts.setMessage('Zostałeś zalogowany!', 'success');
             this.loading = false;
             this.onLogin.emit(true);

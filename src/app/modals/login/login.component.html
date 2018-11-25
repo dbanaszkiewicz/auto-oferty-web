@@ -2,49 +2,53 @@
 
     <div class="row align-items-center justify-content-center">
         <div class="col-sm-11 col-md-6 col-lg-4 col-xl-3">
-<!-- Material form login -->
-<div class="card" [@dialog]>
+            <!-- Material form login -->
+            <div class="card" [@dialog]>
 
-    <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Logowanie</strong>
-    </h5>
+                <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Logowanie</strong>
+                </h5>
 
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0">
+                <!--Card content-->
+                <div class="card-body px-lg-5 pt-0">
 
-        <!-- Form -->
-        <!--<form class="text-center" style="color: #757575;">-->
+                    <!-- Form -->
+                    <form class="text-center" (submit)="login()">
 
-            <!-- Email -->
-            <div class="md-form">
-                <input type="email" id="materialLoginFormEmail" [(ngModel)]="email" class="form-control">
-                <label for="materialLoginFormEmail">E-mail</label>
+                        <!-- Email -->
+                        <div class="md-form">
+                            <input type="email" id="materialLoginFormEmail" [(ngModel)]="email" name="email" class="form-control">
+                            <label for="materialLoginFormEmail">E-mail</label>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="md-form">
+                            <input type="password" id="materialLoginFormPassword" name="password" [(ngModel)]="password"
+                                   class="form-control">
+                            <label for="materialLoginFormPassword">Hasło</label>
+                        </div>
+
+                        <!-- Sign in button -->
+                        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+                                type="submit">Zaloguj się
+                        </button>
+
+                    </form>
+                    <!-- Form -->
+                    <!-- Register -->
+                    <p>Nie masz jeszcze konta?
+                        <a (click)="openRegisterModal()">Zarejestruj się</a>
+                    </p>
+
+                    <!-- Cancel button -->
+                    <button class="btn btn-outline-dark btn-rounded btn-block my-4 waves-effect z-depth-0"
+                            data-close="true" (click)="close($event)" type="submit">Anuluj
+                    </button>
+                    <app-loader [visible]="loading"></app-loader>
+                </div>
+
             </div>
-
-            <!-- Password -->
-            <div class="md-form">
-                <input type="password" id="materialLoginFormPassword" [(ngModel)]="password" class="form-control">
-                <label for="materialLoginFormPassword">Hasło</label>
-            </div>
-
-            <!-- Sign in button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" (click)="login()">Zaloguj się</button>
-
-            <!-- Register -->
-            <p>Nie masz jeszcze konta?
-                <a (click)="openRegisterModal()">Zarejestruj się</a>
-            </p>
-
-            <!-- Cancel button -->
-            <button class="btn btn-outline-dark btn-rounded btn-block my-4 waves-effect z-depth-0" data-close="true" (click)="close($event)" type="submit">Anuluj</button>
-
-        <!--</form>-->
-        <!-- Form -->
-        <app-loader [visible]="loading"></app-loader>
-    </div>
-
-</div>
-<!-- Material form login -->
-    </div>
+            <!-- Material form login -->
+        </div>
     </div>
 </div>

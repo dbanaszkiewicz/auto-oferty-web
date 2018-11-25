@@ -16,6 +16,8 @@ import {ApiService} from './services/api/api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AlertsModule} from 'angular-alert-module';
 import {UserService} from './services/user.service';
+import { FormErrorComponent } from './components/form-error/form-error.component';
+import {FormModule} from './modules/form/form.module';
 
 @NgModule({
     declarations: [
@@ -34,6 +36,7 @@ import {UserService} from './services/user.service';
         NgxSelectModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        FormModule,
         AlertsModule.forRoot()
     ],
     providers: [

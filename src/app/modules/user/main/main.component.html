@@ -1,0 +1,29 @@
+<div class="container">
+    <br />
+    <h2><span class="badge badge-info" style="margin-bottom: 10px;">Panel użytkownika</span></h2>
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <!--account-settings-->
+                <li class="nav-item">
+                    <a class="nav-link" [ngClass]="{active: tab==='account-settings'}" (click)="changeTab('account-settings')">Ustawienia konta</a>
+                </li>
+
+                <!--add-offer-->
+                <li class="nav-item">
+                    <a class="nav-link" [ngClass]="{active: tab==='add-offer'}" (click)="changeTab('add-offer')">Dodaj nowe ogłoszenie</a>
+                </li>
+
+                <!--offer-list-->
+                <li class="nav-item">
+                    <a class="nav-link" [ngClass]="{active: tab==='offer-list'}" (click)="changeTab('offer-list')">Moje ogłoszenia</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <app-settings *ngIf="tab==='account-settings'"></app-settings>
+            <app-add-offer *ngIf="tab==='add-offer'"></app-add-offer>
+            <app-offer-list *ngIf="tab==='offer-list'"></app-offer-list>
+        </div>
+    </div>
+</div>

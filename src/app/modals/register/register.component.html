@@ -13,35 +13,47 @@
                 <div class="card-body px-lg-5 pt-0">
 
                     <!-- Form -->
-                    <form class="text-center" style="color: #757575;">
+                    <form class="text-center" (submit)="register($event)">
 
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <!-- Name -->
                                 <div class="md-form">
-                                    <input type="email" id="materialLoginFormName" class="form-control">
+                                    <input type="text" id="materialLoginFormName" class="form-control is-invalid"
+                                           [ngClass]="{'is-invalid': formErrors.name}"
+                                           name="name" [(ngModel)]="rd.name">
                                     <label for="materialLoginFormName">Imię</label>
+                                    <div class="invalid-feedback" *ngFor="let err of formErrors.name">{{err}}</div>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <!-- Email -->
                                 <div class="md-form">
-                                    <input type="email" id="materialLoginFormEmail" class="form-control">
+                                    <input type="email" id="materialLoginFormEmail" class="form-control" name="email" [(ngModel)]="rd.email"
+                                           [ngClass]="{'is-invalid': formErrors.email}"
+                                    >
                                     <label for="materialLoginFormEmail">E-mail</label>
+                                    <div class="invalid-feedback" *ngFor="let err of formErrors.email">{{err}}</div>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <!-- Password -->
                                 <div class="md-form">
-                                    <input type="password" id="materialLoginFormPassword" class="form-control">
+                                    <input type="password" id="materialLoginFormPassword" class="form-control" name="password" [(ngModel)]="rd.password"
+                                           [ngClass]="{'is-invalid': formErrors.password}"
+                                    >
                                     <label for="materialLoginFormPassword">Hasło</label>
+                                    <div class="invalid-feedback" *ngFor="let err of formErrors.password">{{err}}</div>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <!-- Password -->
                                 <div class="md-form">
-                                    <input type="password" id="materialLoginFormPassword2" class="form-control">
+                                    <input type="password" id="materialLoginFormPassword2" class="form-control" name="password2" [(ngModel)]="rd.password2"
+                                           [ngClass]="{'is-invalid': rd.password !== rd.password2}"
+                                    >
                                     <label for="materialLoginFormPassword2">Powtórz hasło</label>
+                                    <div class="invalid-feedback" *ngIf="rd.password !== rd.password2">Podane hasła są różne!</div>
                                 </div>
                             </div>
                         </div>
@@ -49,19 +61,18 @@
                         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
                                 type="submit">Zarejestruj się
                         </button>
-
-                        <!-- Login -->
-                        <p>Masz już konto?
-                            <a (click)="openLoginModal()">Zaloguj się</a>
-                        </p>
-
-                        <!-- Cancel button -->
-                        <button class="btn btn-outline-dark btn-rounded btn-block my-4 waves-effect z-depth-0"
-                                data-close="true" (click)="close($event)">Anuluj
-                        </button>
-
                     </form>
                     <!-- Form -->
+
+                    <!-- Login -->
+                    <p>Masz już konto?
+                        <a (click)="openLoginModal()">Zaloguj się</a>
+                    </p>
+
+                    <!-- Cancel button -->
+                    <button class="btn btn-outline-dark btn-rounded btn-block my-4 waves-effect z-depth-0"
+                            data-close="true" (click)="close($event)">Anuluj
+                    </button>
                     <app-loader [visible]="loading"></app-loader>
                 </div>
 

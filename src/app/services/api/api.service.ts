@@ -20,4 +20,7 @@ export class ApiService {
         return this.http.get('/api/user/logout').toPromise();
     }
 
+    public register(email: string, name: string, password: string): Promise<object> {
+        return this.http.post('/api/user/register', {email: email, password: password, firstName: name}).toPromise();
+    }
 }

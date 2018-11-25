@@ -39,7 +39,7 @@ export class AppComponent {
 
     onLogin() {
         this.userService.fetchUserData().then(() => {
-            this.updateUserInfoFromService()
+            this.updateUserInfoFromService();
         });
     }
 
