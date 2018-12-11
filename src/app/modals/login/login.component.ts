@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        console.log(this.email);
         this.userService.login(this.email, this.password).then((value) => {
             this.alerts.setMessage('Zostałeś zalogowany!', 'success');
             this.loading = false;

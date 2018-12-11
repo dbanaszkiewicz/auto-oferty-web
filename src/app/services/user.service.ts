@@ -6,7 +6,7 @@ import {ApiService} from './api/api.service';
 })
 export class UserService {
 
-    isLogged = false;
+    isLogged = null;
     userData: UserData = new UserData();
 
   constructor(private apiService: ApiService) {
@@ -23,6 +23,8 @@ export class UserService {
               address: res.UserInfoResult.address,
               phoneNumber: res.UserInfoResult.phoneNumber,
               email: res.UserInfoResult.email,
+              longitude: res.UserInfoResult.longitude,
+              latitude: res.UserInfoResult.latitude
           };
       } else {
           this.isLogged = false;
@@ -51,4 +53,6 @@ export class UserData {
     address: string;
     phoneNumber: string;
     email: string;
+    longitude: string;
+    latitude: string;
 }

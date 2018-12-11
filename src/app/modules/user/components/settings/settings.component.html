@@ -1,3 +1,115 @@
-<p>
-  settings works!
-</p>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <h2>Zmiana danych</h2>
+    <!-- Form -->
+    <form class="text-center" (submit)="changeData($event)">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- E-mail -->
+          <div class="md-form">
+            <input type="email" id="email" class="form-control" name="email" [(ngModel)]="df.email"
+                   [ngClass]="{'is-invalid': dfErrors.email}"
+            >
+            <label for="email">Adres e-mail</label>
+            <div class="invalid-feedback" *ngFor="let err of dfErrors.email">{{err}}</div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <!-- Name -->
+          <div class="md-form">
+            <input type="text" id="name" class="form-control" name="name" [(ngModel)]="df.firstName"
+                   [ngClass]="{'is-invalid': dfErrors.name}"
+            >
+            <label for="name">Imię</label>
+            <div class="invalid-feedback" *ngFor="let err of dfErrors.name">{{err}}</div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <!-- Phone number -->
+          <div class="md-form">
+            <input type="tel" id="phone" class="form-control" name="phone" [(ngModel)]="df.phoneNumber"
+                   [ngClass]="{'is-invalid': dfErrors.phoneNumber}"
+            >
+            <label for="phone">Numer telefonu</label>
+            <div class="invalid-feedback" *ngFor="let err of dfErrors.phoneNumber">{{err}}</div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <!-- Address -->
+          <div class="md-form" >
+            <input type="text" id="address" class="form-control" name="password" [(ngModel)]="df.address"
+                   [ngClass]="{'is-invalid': dfErrors.address}"
+                   (focus)="openResultBox()"
+                   (keyup)="findByAddress()"
+                   autocomplete="off"
+            >
+            <label for="phone">Adres</label>
+            <div class="invalid-feedback" *ngFor="let err of dfErrors.address">{{err}}</div>
+            <div class="result-box" *ngIf="isOpenResultBox && availablePlaces.length > 0">
+              <div class="result-box__item" *ngFor="let place of availablePlaces" (click)="selectAddress(place)">
+                {{place.name}}
+              </div>
+              <div class="result-box__footer">
+                powered by <b>OpenStreetMap</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- register button -->
+      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+              type="submit">Zapisz nowe dane
+      </button>
+      <app-loader [visible]="loadingDF"></app-loader>
+    </form>
+
+
+
+
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <div class="container">
+    <h2>Zmiana hasła</h2>
+    <!-- Form -->
+    <form class="text-center" (submit)="changePassword($event)">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Password -->
+          <div class="md-form">
+            <input type="password" id="materialLoginFormPassword" class="form-control" name="password" [(ngModel)]="pf.currentPassword"
+                   [ngClass]="{'is-invalid': pfErrors.currentPassword}"
+            >
+            <label for="materialLoginFormPassword">Aktualne hasło</label>
+            <div class="invalid-feedback" *ngFor="let err of pfErrors.currentPassword">{{err}}</div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <!-- Password -->
+          <div class="md-form">
+            <input type="password" id="materialLoginFormPassword2" class="form-control" name="password" [(ngModel)]="pf.newPassword"
+                   [ngClass]="{'is-invalid': pfErrors.newPassword}"
+            >
+            <label for="materialLoginFormPassword2">Nowe hasło</label>
+            <div class="invalid-feedback" *ngFor="let err of pfErrors.newPassword">{{err}}</div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <!-- Password -->
+          <div class="md-form">
+            <input type="password" id="materialLoginFormPassword3" class="form-control" name="password" [(ngModel)]="pf.newPassword2"
+                   [ngClass]="{'is-invalid': pf.newPassword2 !== pf.newPassword}"
+            >
+            <label for="materialLoginFormPassword2">Powtórz hasło</label>
+            <div class="invalid-feedback" *ngIf="pf.newPassword2 !== pf.newPassword">Podane hasła są różne!</div>
+          </div>
+        </div>
+      </div>
+      <!-- register button -->
+      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+              type="submit">Zmień hasło
+      </button>
+      <app-loader [visible]="loadingPF"></app-loader>
+    </form>
+    </div>
+  </div>
+</div>

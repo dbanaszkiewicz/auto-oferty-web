@@ -19,7 +19,11 @@ export class AppComponent {
         this.userService.fetchUserData().then(() => {
             this.updateUserInfoFromService();
         });
-    };
+
+        setInterval(() => {
+            $('input').trigger('change');
+        }, 100);
+    }
 
     openLoginModal() {
         this.openedLoginModal = true;

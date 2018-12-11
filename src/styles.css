@@ -112,3 +112,31 @@ div.price {
 .custom-select.is-invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .was-validated .form-control:invalid {
     border-color: #dc3545 !important;
 }
+
+.result-box {
+    position: absolute;
+    background: white;
+    max-width: 180%;
+    width: 130%;
+    z-index: 1;
+    padding: 10px;
+    border: solid 2px #4285F4;
+}
+
+.result-box__item {
+    text-align: left;
+    color: #4285F4;
+    border-bottom: 1px #4285F4 solid;
+}
+.result-box__item:hover {
+    color: #285195;
+}
+
+.result-box__footer {
+    color: #3061b1;
+    font-size: 9px;
+    text-align: right;
+    position: relative;
+    top: 5px;
+    right: -5px;
+}

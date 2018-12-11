@@ -8,24 +8,18 @@ import {MainPageComponent} from './components/main-page/main-page.component';
 import {CommonModule} from '@angular/common';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgxSelectModule} from 'ngx-select-ex';
-import { LoginComponent } from './modals/login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {RegisterComponent} from './modals/register/register.component';
-import { LoaderComponent } from './components/loader/loader.component';
 import {ApiService} from './services/api/api.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AlertsModule} from 'angular-alert-module';
 import {UserService} from './services/user.service';
-import { FormErrorComponent } from './components/form-error/form-error.component';
 import {FormModule} from './modules/form/form.module';
+import {ModalsModule} from './modals/modals.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         MainPageComponent,
-        LoginComponent,
-        RegisterComponent,
-        LoaderComponent
     ],
     imports: [
         BrowserModule,
@@ -37,7 +31,8 @@ import {FormModule} from './modules/form/form.module';
         BrowserAnimationsModule,
         HttpClientModule,
         FormModule,
-        AlertsModule.forRoot()
+        AlertsModule.forRoot(),
+        ModalsModule
     ],
     providers: [
         ApiService,

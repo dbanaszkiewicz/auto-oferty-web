@@ -62,13 +62,11 @@ export class RegisterComponent implements OnInit {
     register($event: Event) {
         this.loading = true;
         $event.preventDefault();
-        console.log(this.rd);
         validate(this.rd).then((errors: Array<ValidationError>) => {
             this.formErrors = serialize(errors);
         });
 
         if (this.rd.password !== this.rd.password2) {
-            console.log('others!!!!');
             this.formErrors.password2 = ['Podane hasła są różne!'];
             this.changeDetectorRef.detectChanges();
         }
