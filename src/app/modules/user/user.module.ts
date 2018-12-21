@@ -9,6 +9,8 @@ import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import {FormModule} from '../form/form.module';
 import {FormsModule} from '@angular/forms';
 import {ComponentsModule} from '../../components/components.module';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {AccordionModule, EditorModule} from 'primeng/primeng';
 
 @NgModule({
   imports: [
@@ -16,7 +18,10 @@ import {ComponentsModule} from '../../components/components.module';
     UserRoutingModule,
     FormModule,
     FormsModule,
-    ComponentsModule
+    ComponentsModule,
+      NgSelectModule,
+      AccordionModule,
+      EditorModule,
   ],
   declarations: [MainComponent, SettingsComponent, OfferListComponent, AddOfferComponent]
 })

@@ -15,6 +15,7 @@ import {AlertsModule} from 'angular-alert-module';
 import {UserService} from './services/user.service';
 import {FormModule} from './modules/form/form.module';
 import {ModalsModule} from './modals/modals.module';
+import {BMVService} from './services/b-m-v.service';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import {ModalsModule} from './modals/modals.module';
     ],
     providers: [
         ApiService,
-        UserService
+        UserService,
+        BMVService
     ],
     bootstrap: [AppComponent]
 })

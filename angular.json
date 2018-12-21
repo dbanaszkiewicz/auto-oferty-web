@@ -26,12 +26,18 @@
               "src/styles.css",
               "node_modules/@ng-select/ng-select/themes/material.theme.css",
               "node_modules/mdbootstrap/css/bootstrap.min.css",
-              "node_modules/mdbootstrap/css/mdb.min.css"
+              "node_modules/mdbootstrap/css/mdb.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/mdbootstrap/js/bootstrap.min.js",
-              "node_modules/mdbootstrap/js/mdb.min.js"
+              "node_modules/mdbootstrap/js/mdb.min.js",
+              "node_modules/quill/dist/quill.js"
             ]
           },
           "configurations": {

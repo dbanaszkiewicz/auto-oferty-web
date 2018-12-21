@@ -140,3 +140,28 @@ div.price {
     top: 5px;
     right: -5px;
 }
+
+.bs-switch {
+    position: relative;
+    top: 20px;
+}
+
+.ng-select {
+    top: 12px;
+}
+
+.ng-select.is-invalid .ng-select-container:after {
+    border-bottom: 1px solid red;
+}
+
+.ng-select.ng-select-disabled.is-invalid .ng-select-container:after {
+    background-image: linear-gradient(to right, rgba(255,0,0,0.42) 50%, rgba(255,0,0,0.42) 85%, transparent 0%);
+}
+
+.invalid-feedback {
+    display: block !important;
+}
+
+.alertsContainer[_ngcontent-c3] {
+    position: fixed !important;
+}

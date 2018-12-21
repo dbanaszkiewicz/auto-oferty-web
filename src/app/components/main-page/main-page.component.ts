@@ -1,4 +1,5 @@
-import {ChangeDetectorRef, Component, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {BMVService, IBrand, IModel, IVersion} from '../../services/b-m-v.service';
 
 @Component({
     selector: 'app-main-page',
@@ -12,85 +13,38 @@ export class MainPageComponent implements OnInit {
     public model;
     public version;
 
-    public brands: Array<object> = null;
-    public models: Array<object> = null;
-    public versions: Array<object> = null;
+    brands: Array<IBrand> = null;
+    models: Array<IModel> = null;
+    versions: Array<IVersion> = null;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                private bmvService: BMVService) {
         this.data = {
-            'brands': [
-                {
-                    'slug': 'fiat',
-                    'name': 'Fiat',
-                    'models': [
-                        {
-                            'slug': 'tipo',
-                            'name': 'Tipo',
-                            'versions': [
-                                {
-                                    'slug': 'i-1988-1995',
-                                    'name': 'I (1988-1995)'
-                                },
-                                {
-                                    'slug': 'ii-2016',
-                                    'name': 'II (2016-)'
-                                }
-                            ]
-                        },
-                        {
-                            'slug': 'punto',
-                            'name': 'Punto',
-                            'versions': [
-                                {
-                                    'slug': 'i-1994-1999',
-                                    'name': 'I (1994-1999)'
-                                },
-                                {
-                                    'slug': 'ii-1999-2003',
-                                    'name': 'II (1999-2003)'
-                                },
-                                {
-                                    'slug': 'ii-fl-2003',
-                                    'name': 'II FL (2003-)'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+            'brands': bmvService.getBrands()
         };
 
         this.brands = this.data.brands;
-    }
-
-    private static findInObjectArrayByFieldValue(arr: Array<object>, field: string, value: any): any {
-        for (const item of arr) {
-            if (item[field] === value) {
-                return item;
-            }
-        }
-        return null;
     }
 
     ngOnInit() {
     }
 
     public onChangeBrand() {
-        let modelsArray: Array<object> = null;
+        let modelsArray: Array<IModel> = null;
         if (this.brand !== null) {
-            modelsArray = MainPageComponent.findInObjectArrayByFieldValue(this.brands, 'slug', this.brand).models;
+            modelsArray = this.bmvService.getModelsByBrandId(this.brand);
         }
 
         if (this.brand === null
-            || (this.model !== null && MainPageComponent.findInObjectArrayByFieldValue(modelsArray, 'slug', this.model) !== null)) {
+            || (this.model !== null && this.bmvService.findModelByBrandIdModelId(this.brand, this.model) !== null) === null) {
             this.model = null;
             this.version = null;
             this.models = null;
             this.versions = null;
-        } else if (this.model && this.model !== null) {
-            const versionsArray: Array<object> = MainPageComponent.findInObjectArrayByFieldValue(this.models, 'slug', this.model).versions;
-
-            if (this.version !== null  && MainPageComponent.findInObjectArrayByFieldValue(versionsArray, 'slug', this.version)) {
+        } else if (this.model) {
+            if (this.version !== null
+                && this.bmvService.findVersionByBrandIdModelIdVersionId(this.brand, this.model, this.version) === null
+            ) {
                 this.version = null;
                 this.versions = null;
             }
@@ -104,14 +58,15 @@ export class MainPageComponent implements OnInit {
     }
 
     public onChangeModel() {
-        let versionsArray: Array<object> = null;
+        let versionsArray: Array<IVersion> = null;
 
         if (this.model !== null) {
-            versionsArray = MainPageComponent.findInObjectArrayByFieldValue(this.models, 'slug', this.model).versions;
+            versionsArray = this.bmvService.getVersionsByBrandIdModelId(this.brand, this.model);
         }
 
-        if (this.model === null
-            || this.version !== null  && MainPageComponent.findInObjectArrayByFieldValue(versionsArray, 'slug', this.version)) {
+
+        if (this.model === null ||
+            this.version !== null && this.bmvService.findVersionByBrandIdModelIdVersionId(this.brand, this.model, this.version) === null) {
             this.version = null;
             this.versions = null;
         }

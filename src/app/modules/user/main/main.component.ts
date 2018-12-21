@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../../services/user.service';
 import {AlertsService} from 'angular-alert-module';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -12,11 +12,21 @@ export class MainComponent implements OnInit {
 
   tab = 'account-settings';
   loading = true;
+  edit = 0;
 
   constructor(private userService: UserService,
               private alerts: AlertsService,
               private router: Router) {
     this.checkIsUserLogged();
+    this.router.events.subscribe(value => {
+        if (value instanceof NavigationEnd) {
+            if ( /^\/user\/edit\/[0-9]+$/.test(value.url)) {
+                this.edit = +router.url.substr('/user/edit/'.length);
+            } else {
+                this.edit = 0;
+            }
+        }
+    });
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 <div class="container">
     <br />
     <h2><span class="badge badge-info" style="margin-bottom: 10px;">Panel użytkownika</span></h2>
-    <div class="card text-center">
+    <div class="card text-center" *ngIf="edit===0">
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
                 <!--account-settings-->
@@ -24,6 +24,19 @@
             <app-settings [hidden]="tab!=='account-settings'"></app-settings>
             <app-add-offer [hidden]="tab!=='add-offer'"></app-add-offer>
             <app-offer-list [hidden]="tab!=='offer-list'"></app-offer-list>
+        </div>
+        <app-loader [visible]="loading"></app-loader>
+    </div>
+    <div class="card text-center" *ngIf="edit>0">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="nav-link active">Edycja oferty</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <app-add-offer [offerId]="edit"></app-add-offer>
         </div>
         <app-loader [visible]="loading"></app-loader>
     </div>

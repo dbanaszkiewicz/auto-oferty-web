@@ -1,3 +1,189 @@
-<p>
-  add-offer works!
-</p>
+<form class="text-center" (submit)="addOffer($event)">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">Dane ogólne:</div>
+                <div class="card-body">
+                    <!-- Name -->
+                    <div class="md-form">
+                        <input type="text" id="input" class="form-control" name="offerName" [(ngModel)]="form.name"
+                               [ngClass]="{'is-invalid': formErrors.name}"
+                        >
+                        <label for="input">Nazwa oferty</label>
+                        <div class="invalid-feedback" *ngFor="let err of formErrors.name">{{err}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select (change)="onChangeBrand()" (clear)="onChangeBrand()" [disabled]="brands == null" [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.brand}"
+                                       [(ngModel)]="form.brand" [addTag]="true" placeholder="Wybierz markę" name="brand">
+                                <ng-option *ngFor="let item of brands" [value]="item.id">{{item.name}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.brand">{{err}}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select (change)="onChangeModel()" (clear)="onChangeModel()" [disabled]="form.brand == null" [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.model}"
+                                       [(ngModel)]="form.model" [addTag]="true" placeholder="Wybierz model" name="model">
+                                <ng-option *ngFor="let item of models" [value]="item.id">{{item.name}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.model">{{err}}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select [disabled]="form.model == null" [addTag]="true" [(ngModel)]="form.version" [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.version}"
+                                       placeholder="Wybierz wersję"
+                                       name="version">
+                                <ng-option *ngFor="let item of versions" [value]="item.id">{{item.name}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.version">{{err}}</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="md-form">
+                                <input type="number" id="price" class="form-control" name="doors"
+                                       [(ngModel)]="form.price"
+                                       [ngClass]="{'is-invalid': formErrors.price}"
+                                >
+                                <label for="price">Cena</label>
+                                <div class="invalid-feedback" *ngFor="let err of formErrors.price">{{err}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            Uszkodzony: <label class="bs-switch">
+                            <input type="checkbox" [(ngModel)]="form.afterAccident" name="afterAccident">
+                            <span class="slider round"></span>
+                        </label>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            Używany: <label class="bs-switch">
+                            <input type="checkbox" [(ngModel)]="form.used" name="used">
+                            <span class="slider round"></span>
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select [(ngModel)]="form.doors" placeholder="Wybierz liczbę drzwi"  [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.doors}"
+                                       name="doors">
+                                <ng-option [value]="'3'">3 drzwi</ng-option>
+                                <ng-option [value]="'5'">5 drzwi</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.doors">{{err}}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select [(ngModel)]="form.fuelType" placeholder="Wybierz rodzaj paliwa"  [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.fuelType}"
+                                       name="fuelType">
+                                <ng-option *ngFor="let item of fuelTypes" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.fuelType">{{err}}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="md-form">
+                                <input type="number" id="meter" class="form-control" name="meter"
+                                       [(ngModel)]="form.meterStatus"
+                                       [ngClass]="{'is-invalid': formErrors.meterStatus}"
+                                >
+                                <label for="meter">Przebieg (w km)</label>
+                                <div class="invalid-feedback" *ngFor="let err of formErrors.meterStatus">{{err}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="md-form">
+                                <input type="number" id="power" class="form-control" name="power"
+                                       [(ngModel)]="form.enginePower"
+                                       [ngClass]="{'is-invalid': formErrors.enginePower}"
+                                >
+                                <label for="power">Moc silnika (w KM)</label>
+                                <div class="invalid-feedback" *ngFor="let err of formErrors.enginePower">{{err}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="md-form">
+                                <input type="number" id="capacity" class="form-control" name="capacity"
+                                       [(ngModel)]="form.engineCapacity"
+                                       [ngClass]="{'is-invalid': formErrors.engineCapacity}"
+                                >
+                                <label for="capacity">Pojemność silnika (w cm<sup>3</sup>)</label>
+                                <div class="invalid-feedback"
+                                     *ngFor="let err of formErrors.engineCapacity">{{err}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select [(ngModel)]="form.gearbox" placeholder="Wybierz rodzaj skrzyni biegów" [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.gearbox}"
+                                       name="gearbox">
+                                <ng-option *ngFor="let item of gearboxTypes" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.gearbox">{{err}}</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="md-form">
+                                <input type="number" id="produciton" class="form-control" name="produciton"
+                                       [(ngModel)]="form.productionYear"
+                                       [ngClass]="{'is-invalid': formErrors.productionYear}"
+                                >
+                                <label for="produciton">Rok produkcji</label>
+                                <div class="invalid-feedback"
+                                     *ngFor="let err of formErrors.productionYear">{{err}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select [(ngModel)]="form.bodyColor" placeholder="Wybierz kolor karoserii"  [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.bodyColor}"
+                                       name="gearbox">
+                                <ng-option *ngFor="let item of colors" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.bodyColor">{{err}}</div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <ng-select [(ngModel)]="form.bodyType" placeholder="Wybierz rodzaj nadwozia" [clearable]="false"
+                                       [ngClass]="{'is-invalid': formErrors.bodyType}"
+                                       name="gearbox">
+                                <ng-option *ngFor="let item of bodyTypes" [value]="item">{{item}}</ng-option>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngFor="let err of formErrors.bodyType">{{err}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-header">Wyposażenie:</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 text-left" *ngFor="let i of equipments">
+                            <input type="checkbox" [(ngModel)]="form.equipments[i.id]" name="eq_{{i.id}}"> {{i.value}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-header">Opis:</div>
+                <div class="card-body">
+                    <div class="row">
+                        <p-editor [(ngModel)]="form.description" name="desc" [style]="{'height':'320px'}"
+                                  style="width: 100%;"></p-editor>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- register button -->
+    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+            type="submit">Dodaj ofertę
+    </button>
+    <app-loader [visible]="loading"></app-loader>
+</form>
