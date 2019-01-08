@@ -165,3 +165,17 @@ div.price {
 .alertsContainer[_ngcontent-c3] {
     position: fixed !important;
 }
+
+
+
+.text-nowrap > .glyphicon {
+    margin-left: 10px;
+}
+
+.dz-filename {
+    display: none;
+}
+
+.dz-size {
+    display: none;
+}

@@ -1,53 +1,21 @@
 import {Injectable} from '@angular/core';
+import {ApiService} from './api/api.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BMVService {
 
-    private readonly data: Array<IBrand>;
+    private data: Array<IBrand>;
 
-    constructor() {
-        this.data = [
-            {
-                'id': 'fiat',
-                'name': 'Fiat',
-                'models': [
-                    {
-                        'id': 'tipo',
-                        'name': 'Tipo',
-                        'versions': [
-                            {
-                                'id': 'i-1988-1995',
-                                'name': 'I (1988-1995)'
-                            },
-                            {
-                                'id': 'ii-2016',
-                                'name': 'II (2016-)'
-                            }
-                        ]
-                    },
-                    {
-                        'id': 'punto',
-                        'name': 'Punto',
-                        'versions': [
-                            {
-                                'id': 'i-1994-1999',
-                                'name': 'I (1994-1999)'
-                            },
-                            {
-                                'id': 'ii-1999-2003',
-                                'name': 'II (1999-2003)'
-                            },
-                            {
-                                'id': 'ii-fl-2003',
-                                'name': 'II FL (2003-)'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
+    constructor(
+        private apiService: ApiService,
+    ) {
+        this.data = [];
+        this.apiService.getBMVData().then((value) => {
+            this.data = value as any;
+            console.log(this.data);
+        });
     }
 
     getBrands(): Array<IBrand> {

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {BMVService, IBrand, IModel, IVersion} from '../../../../services/b-m-v.service';
 import {StaticDataService} from '../../../../services/static-data.service';
 import {
@@ -15,6 +15,8 @@ import {ApiService} from '../../../../services/api/api.service';
 import {serialize} from '../../../../tools/tools';
 import {AlertsService} from 'angular-alert-module';
 import {Router} from '@angular/router';
+import {DropzoneComponent, DropzoneConfigInterface, DropzoneDirective} from 'ngx-dropzone-wrapper';
+import {$e} from 'codelyzer/angular/styles/chars';
 
 @Component({
     selector: 'app-add-offer',
@@ -32,10 +34,30 @@ export class AddOfferComponent implements OnInit {
     equipments: any;
     @Input() offerId = 0;
 
+    dropzoneConfig: DropzoneConfigInterface = {
+        url: '/api/offer/' + this.offerId + '/add-photo',
+        maxFilesize: 50,
+        acceptedFiles: 'image/*',
+        addRemoveLinks: true,
+        // previewTemplate: '<div class="dz-preview dz-file-preview">' +
+        //     '  <div class="dz-details">' +
+        //     '<div class="dz-filename"><span>dfasdfasd</span></div>' +
+        //     '<div class="dz-size">fdas</div>' +
+        //     '    <img data-dz-thumbnail />' +
+        //     '  </div>' +
+        //     '  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>' +
+        //     '  <div class="dz-success-mark"><span>✔</span></div>' +
+        //     '  <div class="dz-error-mark"><span>✘</span></div>' +
+        //     '  <div class="dz-error-message"><span data-dz-errormessage></span></div>' +
+        //     '</div>'
+    };
+
     fuelTypes: Array<string> = StaticDataService.fuelTypes;
     gearboxTypes: Array<string> = StaticDataService.gearboxTypes;
     colors: Array<string> = StaticDataService.bodyColors;
     bodyTypes: Array<string> = StaticDataService.bodyTypes;
+
+    @ViewChild(DropzoneComponent) dropzone?: DropzoneComponent;
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
@@ -55,8 +77,36 @@ export class AddOfferComponent implements OnInit {
     ngOnInit() {
         if (this.offerId > 0) {
             this.apiService.getEditOfferData(this.offerId).then((value: Form) => {
+                this.dropzoneConfig.url =  '/api/offer/' + this.offerId + '/add-photo';
                 this.form = value;
                 this.form.id = this.offerId;
+                for (const photo of this.form.photos) {
+                    const mockFile = { id: photo.id, name: '/api/storage/' + photo.name, size: 0, dataURL: '/api/storage/' + photo.name};
+
+                    const dropzoneInstance = this.dropzone.directiveRef.dropzone();
+                    dropzoneInstance.emit('addedfile', mockFile);
+                    dropzoneInstance.emit('thumbnail', mockFile);
+                    // $('.dz-image img').last().prop('src', mockFile.name);
+                    console.log($($('.dz-image')[$('.dz-image').length - 1]));
+                    // dropzoneInstance.createThumbnailFromUrl(mockFile, mockFile.name);
+                    dropzoneInstance.createThumbnailFromUrl(
+                        mockFile,
+                        dropzoneInstance.options.thumbnailWidth,
+                        dropzoneInstance.options.thumbnailHeight,
+                        dropzoneInstance.options.thumbnailMethod,
+                        true,
+                        function (thumbnail) {
+                            dropzoneInstance.files.push(thumbnail);
+                            dropzoneInstance.emit('thumbnail', mockFile, thumbnail);
+                        },
+                        'Anonymous'
+                    );
+                    dropzoneInstance.emit('complete', mockFile);
+                }
+
+                this.brands = this.bmvService.getBrands();
+                this.models = this.bmvService.getModelsByBrandId(value.brand);
+                this.versions = this.bmvService.getVersionsByBrandIdModelId(value.brand, value.model);
             });
         }
     }
@@ -88,6 +138,21 @@ export class AddOfferComponent implements OnInit {
     //        }
         });
     }
+
+    onUploadSuccess($event: any) {
+        console.log($event);
+        const file = $event[0];
+        const id = $event[1];
+
+        file.myId = id;
+    }
+
+    onRemoveFile($event: any) {
+        const id = $event.id;
+        this.apiService.removePhoto(id);
+    }
+
+
 
     public onChangeBrand() {
         let modelsArray: Array<IModel> = null;
@@ -175,6 +240,7 @@ class Form {
     bodyType: string;
 
     equipments: any;
+    photos: any;
 
     description: string;
 }

@@ -11,6 +11,8 @@ import {FormsModule} from '@angular/forms';
 import {ComponentsModule} from '../../components/components.module';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {AccordionModule, EditorModule} from 'primeng/primeng';
+import {DataTableModule} from 'angular-6-datatable';
+import {DropzoneModule} from 'ngx-dropzone-wrapper';
 
 @NgModule({
   imports: [
@@ -22,6 +24,8 @@ import {AccordionModule, EditorModule} from 'primeng/primeng';
       NgSelectModule,
       AccordionModule,
       EditorModule,
+      DataTableModule,
+      DropzoneModule
   ],
   declarations: [MainComponent, SettingsComponent, OfferListComponent, AddOfferComponent]
 })
