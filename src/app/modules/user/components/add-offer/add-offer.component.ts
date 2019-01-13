@@ -15,8 +15,7 @@ import {ApiService} from '../../../../services/api/api.service';
 import {serialize} from '../../../../tools/tools';
 import {AlertsService} from 'angular-alert-module';
 import {Router} from '@angular/router';
-import {DropzoneComponent, DropzoneConfigInterface, DropzoneDirective} from 'ngx-dropzone-wrapper';
-import {$e} from 'codelyzer/angular/styles/chars';
+import {DropzoneComponent, DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
 
 @Component({
     selector: 'app-add-offer',
@@ -38,18 +37,7 @@ export class AddOfferComponent implements OnInit {
         url: '/api/offer/' + this.offerId + '/add-photo',
         maxFilesize: 50,
         acceptedFiles: 'image/*',
-        addRemoveLinks: true,
-        // previewTemplate: '<div class="dz-preview dz-file-preview">' +
-        //     '  <div class="dz-details">' +
-        //     '<div class="dz-filename"><span>dfasdfasd</span></div>' +
-        //     '<div class="dz-size">fdas</div>' +
-        //     '    <img data-dz-thumbnail />' +
-        //     '  </div>' +
-        //     '  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>' +
-        //     '  <div class="dz-success-mark"><span>✔</span></div>' +
-        //     '  <div class="dz-error-mark"><span>✘</span></div>' +
-        //     '  <div class="dz-error-message"><span data-dz-errormessage></span></div>' +
-        //     '</div>'
+        addRemoveLinks: true
     };
 
     fuelTypes: Array<string> = StaticDataService.fuelTypes;
@@ -69,46 +57,48 @@ export class AddOfferComponent implements OnInit {
         this.form = new Form();
         this.form.equipments = {};
         this.brands = bmvService.getBrands();
-        this.apiService.getEquipments().then((value) => {
-            this.equipments = value;
-        });
     }
 
     ngOnInit() {
-        if (this.offerId > 0) {
-            this.apiService.getEditOfferData(this.offerId).then((value: Form) => {
-                this.dropzoneConfig.url =  '/api/offer/' + this.offerId + '/add-photo';
-                this.form = value;
-                this.form.id = this.offerId;
-                for (const photo of this.form.photos) {
-                    const mockFile = { id: photo.id, name: '/api/storage/' + photo.name, size: 0, dataURL: '/api/storage/' + photo.name};
+        this.apiService.getEquipments().then((value) => {
+            this.equipments = value;
+            if (this.offerId > 0) {
+                this.apiService.getEditOfferData(this.offerId).then((value: Form) => {
+                    this.dropzoneConfig.url = '/api/offer/' + this.offerId + '/add-photo';
+                    this.form = value;
+                    this.form.id = this.offerId;
+                    for (const photo of this.form.photos) {
+                        const mockFile = {id: photo.id, name: '/api/storage/' + photo.name, size: 0, dataURL: '/api/storage/' + photo.name};
 
-                    const dropzoneInstance = this.dropzone.directiveRef.dropzone();
-                    dropzoneInstance.emit('addedfile', mockFile);
-                    dropzoneInstance.emit('thumbnail', mockFile);
-                    // $('.dz-image img').last().prop('src', mockFile.name);
-                    console.log($($('.dz-image')[$('.dz-image').length - 1]));
-                    // dropzoneInstance.createThumbnailFromUrl(mockFile, mockFile.name);
-                    dropzoneInstance.createThumbnailFromUrl(
-                        mockFile,
-                        dropzoneInstance.options.thumbnailWidth,
-                        dropzoneInstance.options.thumbnailHeight,
-                        dropzoneInstance.options.thumbnailMethod,
-                        true,
-                        function (thumbnail) {
-                            dropzoneInstance.files.push(thumbnail);
-                            dropzoneInstance.emit('thumbnail', mockFile, thumbnail);
-                        },
-                        'Anonymous'
-                    );
-                    dropzoneInstance.emit('complete', mockFile);
-                }
+                        const dropzoneInstance = this.dropzone.directiveRef.dropzone();
+                        dropzoneInstance.emit('addedfile', mockFile);
+                        dropzoneInstance.emit('thumbnail', mockFile);
+                        dropzoneInstance.createThumbnailFromUrl(
+                            mockFile,
+                            dropzoneInstance.options.thumbnailWidth,
+                            dropzoneInstance.options.thumbnailHeight,
+                            dropzoneInstance.options.thumbnailMethod,
+                            true,
+                            function (thumbnail) {
+                                dropzoneInstance.files.push(thumbnail);
+                                dropzoneInstance.emit('thumbnail', mockFile, thumbnail);
+                            },
+                            'Anonymous'
+                        );
+                        dropzoneInstance.emit('complete', mockFile);
+                    }
 
-                this.brands = this.bmvService.getBrands();
-                this.models = this.bmvService.getModelsByBrandId(value.brand);
-                this.versions = this.bmvService.getVersionsByBrandIdModelId(value.brand, value.model);
-            });
-        }
+                    this.brands = this.bmvService.getBrands();
+                    this.models = this.bmvService.getModelsByBrandId(value.brand);
+                    this.versions = this.bmvService.getVersionsByBrandIdModelId(value.brand, value.model);
+                    this.changeDetectorRef.detectChanges();
+                }).catch(reason => {
+                    console.error(reason);
+                });
+            }
+        }).catch(reason => {
+            console.error(reason);
+        });
     }
 
     addOffer($event: Event) {
@@ -117,25 +107,25 @@ export class AddOfferComponent implements OnInit {
         validate(this.form).then((errors: Array<ValidationError>) => {
             this.formErrors = serialize(errors);
 //            if (Object.keys(this.formErrors).length === 0) {
-                this.apiService.addOffer(this.form).then((value: any) => {
-                    if (this.offerId > 0) {
-                        this.alert.setMessage('Oferta została zaktualizowana.', 'success');
-                    } else {
-                        this.alert.setMessage('Oferta została dodana.', 'success');
-                        this.router.navigateByUrl('/user/edit/' + value.id);
-                    }
-                    this.loading = false;
-                }, reason => {
-                    if (reason.error && reason.error.message) {
-                        this.alert.setMessage(reason.error.message, 'error');
-                    } else {
-                        this.alert.setMessage('Ups... coś poszło nie tak...', 'error');
-                    }
-                    this.loading = false;
-                });
-  //          } else {
+            this.apiService.addOffer(this.form).then((value: any) => {
+                if (this.offerId > 0) {
+                    this.alert.setMessage('Oferta została zaktualizowana.', 'success');
+                } else {
+                    this.alert.setMessage('Oferta została dodana.', 'success');
+                    this.router.navigateByUrl('/user/edit/' + value.id);
+                }
                 this.loading = false;
-    //        }
+            }, reason => {
+                if (reason.error && reason.error.message) {
+                    this.alert.setMessage(reason.error.message, 'error');
+                } else {
+                    this.alert.setMessage('Ups... coś poszło nie tak...', 'error');
+                }
+                this.loading = false;
+            });
+            //          } else {
+            this.loading = false;
+            //        }
         });
     }
 
@@ -153,7 +143,6 @@ export class AddOfferComponent implements OnInit {
     }
 
 
-
     public onChangeBrand() {
         let modelsArray: Array<IModel> = null;
         if (this.form.brand !== null) {
@@ -162,7 +151,7 @@ export class AddOfferComponent implements OnInit {
 
         if (this.form.brand === null
             ||
-            (this.form.model !== null && this.bmvService.findModelByBrandIdModelId(this.form.brand || '0', this.form.model || '0') !== null) === null
+            (this.form.model !== null && this.bmvService.findModelByBrandIdModelId(this.form.brand || '0', this.form.model || '0') === null)
         ) {
             this.form.model = null;
             this.form.version = null;

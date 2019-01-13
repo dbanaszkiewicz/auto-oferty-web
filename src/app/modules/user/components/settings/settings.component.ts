@@ -102,6 +102,8 @@ export class SettingsComponent implements OnInit {
           } else {
               this.loadingDF = false;
           }
+      }).catch(reason => {
+          console.error(reason);
       });
   }
 

@@ -1,9 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {BMVService, IBrand, IModel, IVersion} from '../../../../services/b-m-v.service';
-import {StaticDataService} from '../../../../services/static-data.service';
 import {ApiService} from '../../../../services/api/api.service';
 import {AlertsService} from 'angular-alert-module';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-offer-list',
@@ -12,6 +9,7 @@ import {Router} from '@angular/router';
 })
 export class OfferListComponent implements OnInit {
   loading = false;
+  @Input()
   offers: Array<IOfferItem>;
 
   constructor(
@@ -19,12 +17,52 @@ export class OfferListComponent implements OnInit {
       private apiService: ApiService,
       private alert: AlertsService,
   ) {
+  }
+
+  loadOffers() {
     this.apiService.getUserOfferList().then((value: any) => {
       this.offers = value.offerListByUserIdResult;
+    }).catch(reason => {
+      console.error(reason);
+    }).finally(() => {
+      this.loading = false;
     });
   }
 
   ngOnInit() {
+    this.loadOffers();
+  }
+
+  renew(id: number) {
+    this.loading = true;
+    this.apiService.renewOffer(id).then((value: any) => {
+      if (value === true) {
+        this.alert.setMessage('Oferta została odnowiona!', 'success');
+        this.loadOffers();
+      } else {
+        this.alert.setMessage('Nie udało się przedłużyć czasu wygasania oferty!', 'error');
+        this.loading = false;
+      }
+    }).catch(reason => {
+      this.alert.setMessage('Nie udało się przedłużyć czasu wygasania oferty!', 'error');
+      this.loading = false;
+    });
+  }
+
+  remove(id: number) {
+    this.loading = true;
+    this.apiService.removeOffer(id).then((value: any) => {
+      if (value === true) {
+        this.alert.setMessage('Oferta została usunięta!', 'success');
+        this.loadOffers();
+      } else {
+        this.alert.setMessage('Nie udało się usunąć oferty!', 'error');
+        this.loading = false;
+      }
+    }).catch(reason => {
+      this.alert.setMessage('Nie udało się usunąć oferty!', 'error');
+      this.loading = false;
+    });
   }
 
 }

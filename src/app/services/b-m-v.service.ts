@@ -14,7 +14,8 @@ export class BMVService {
         this.data = [];
         this.apiService.getBMVData().then((value) => {
             this.data = value as any;
-            console.log(this.data);
+        }).catch(reason => {
+            console.error(reason);
         });
     }
 

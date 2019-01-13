@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../../services/user.service';
 import {AlertsService} from 'angular-alert-module';
 import {NavigationEnd, Router} from '@angular/router';
+import {ApiService} from '../../../services/api/api.service';
 
 @Component({
   selector: 'app-main',
@@ -13,9 +14,11 @@ export class MainComponent implements OnInit {
   tab = 'account-settings';
   loading = true;
   edit = 0;
+  offers: any;
 
   constructor(private userService: UserService,
               private alerts: AlertsService,
+              private apiService: ApiService,
               private router: Router) {
     this.checkIsUserLogged();
     this.router.events.subscribe(value => {
@@ -46,6 +49,13 @@ export class MainComponent implements OnInit {
   }
 
   changeTab(name) {
+      if (name === 'offer-list') {
+          this.apiService.getUserOfferList().then((value: any) => {
+              this.offers = value.offerListByUserIdResult;
+          }).catch(reason => {
+              console.error(reason);
+          });
+      }
       this.tab = name;
   }
 

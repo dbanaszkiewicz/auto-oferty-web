@@ -18,6 +18,8 @@ export class AppComponent {
     constructor(private userService: UserService, private alerts: AlertsService) {
         this.userService.fetchUserData().then(() => {
             this.updateUserInfoFromService();
+        }).catch(reason => {
+            console.error(reason);
         });
 
         setInterval(() => {
@@ -44,6 +46,8 @@ export class AppComponent {
     onLogin() {
         this.userService.fetchUserData().then(() => {
             this.updateUserInfoFromService();
+        }).catch(reason => {
+            console.error(reason);
         });
     }
 
@@ -51,6 +55,8 @@ export class AppComponent {
         this.userService.logout().then(() => {
             this.updateUserInfoFromService();
             this.alerts.setMessage('Wylogowano...', 'success');
+        }).catch(reason => {
+            console.error(reason);
         });
     }
 

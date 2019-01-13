@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BMVService, IBrand, IModel, IVersion} from '../../services/b-m-v.service';
+import {ApiService} from '../../services/api/api.service';
 
 @Component({
     selector: 'app-main-page',
@@ -16,12 +17,21 @@ export class MainPageComponent implements OnInit {
     brands: Array<IBrand> = null;
     models: Array<IModel> = null;
     versions: Array<IVersion> = null;
+    popularOffers: Array<ShortOfferInfo> = null;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
-                private bmvService: BMVService) {
+                private bmvService: BMVService,
+                private apiService: ApiService) {
         this.data = {
             'brands': bmvService.getBrands()
         };
+
+        this.apiService.mostPopular().then((value: any) => {
+            this.popularOffers = value;
+        }).catch(reason => {
+            console.error(reason);
+        })
+
 
         this.brands = this.data.brands;
     }
@@ -75,4 +85,15 @@ export class MainPageComponent implements OnInit {
             this.versions = versionsArray;
         }
     }
+}
+
+class ShortOfferInfo {
+    id: number;
+    name: string
+    photo: string;
+    price: string;
+    fuelType: string;
+    enginePower: string;
+    productionYear: string;
+    meterStatus: string;
 }

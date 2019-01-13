@@ -1,42 +1,52 @@
-
-<table class="table table-striped" [mfData]="offers" #mf="mfDataTable" [mfRowsOnPage]="10">
-  <thead>
-  <tr>
-    <th class="th-sm" colspan="2" width="40%">
-      <mfDefaultSorter by="name">Ogłoszenie</mfDefaultSorter>
-    </th>
-    <th class="th-sm">
-      <mfDefaultSorter by="createDate">Data utworzenia</mfDefaultSorter>
-    </th>
-    <th class="th-sm">
-      <mfDefaultSorter by="expireDate">Data wygaśnięcia</mfDefaultSorter>
-    </th>
-    <th class="th-sm">
-      <mfDefaultSorter by="viewCounter">Liczba odsłon</mfDefaultSorter>
-    </th>
-    <th class="th-sm">
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let offer of mf.data">
-    <td>
-      <img style="width: 120px; height: 120px; object-fit: cover;" *ngIf="offer.photo.length > 0" [src]="'/api/storage/' + offer.photo" alt="{{offer.name}}">
-    </td>
-    <td class="align-middle text-left">{{offer.name}}</td>
-    <td class="align-middle">{{offer.createDate}}</td>
-    <td class="align-middle">{{offer.expireDate}}</td>
-    <td class="align-middle">{{offer.viewCounter}}</td>
-    <td class="align-middle">
-      <button class="btn btn-sm btn-warning" [routerLink]="'/user/edit/' + offer.id.toString()">Edytuj</button>
-    </td>
-  </tr>
-  </tbody>
-  <tfoot>
-  <tr>
-    <td colspan="4">
-      <mfBootstrapPaginator [rowsOnPageSet]="[10,25,50]"></mfBootstrapPaginator>
-    </td>
-  </tr>
-  </tfoot>
-</table>
+<div>
+    <table class="table table-striped" [mfData]="offers" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+        <tr>
+            <th class="th-sm" colspan="2" width="40%">
+                <mfDefaultSorter by="name">Ogłoszenie</mfDefaultSorter>
+            </th>
+            <th class="th-sm">
+                <mfDefaultSorter by="createDate">Data utworzenia</mfDefaultSorter>
+            </th>
+            <th class="th-sm">
+                <mfDefaultSorter by="expireDate">Data wygaśnięcia</mfDefaultSorter>
+            </th>
+            <th class="th-sm">
+                <mfDefaultSorter by="viewCounter">Liczba odsłon</mfDefaultSorter>
+            </th>
+            <th class="th-sm">
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let offer of mf.data">
+            <td>
+                <img style="width: 120px; height: 120px; object-fit: cover;" *ngIf="offer.photo.length > 0"
+                     [src]="'/api/storage/' + offer.photo" alt="{{offer.name}}">
+            </td>
+            <td class="align-middle text-left">{{offer.name}}</td>
+            <td class="align-middle">{{offer.createDate}}</td>
+            <td class="align-middle">
+                {{offer.expireDate}}
+                <br/>
+                <button *ngIf="offer.renewable" class="btn btn-sm small btn-info" (click)="renew(offer.id)">Przedłuż
+                </button>
+            </td>
+            <td class="align-middle">{{offer.viewCounter}}</td>
+            <td class="align-middle">
+                <button class="btn btn-sm btn-warning" [routerLink]="'/user/edit/' + offer.id.toString()">Edytuj
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="remove(offer.id)">Usuń</button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[10,25,50]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <app-loader [visible]="loading"></app-loader>
+</div>

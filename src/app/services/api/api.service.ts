@@ -36,6 +36,18 @@ export class ApiService {
         return this.http.post('/api/offer/add', data).toPromise();
     }
 
+    public renewOffer(id: number): Promise<object> {
+        return this.http.post('/api/offer/renew/' + id, null).toPromise();
+    }
+
+    public removeOffer(id: number): Promise<object> {
+        return this.http.delete('/api/offer/remove/' + id).toPromise();
+    }
+
+    public mostPopular(): Promise<object> {
+        return this.http.get('/api/offer/popular').toPromise();
+    }
+
     public getEditOfferData(id: number): Promise<object> {
         return this.http.get('/api/offer/get-edit-data/' + id).toPromise();
     }
