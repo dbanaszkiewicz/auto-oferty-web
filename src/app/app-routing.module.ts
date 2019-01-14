@@ -7,6 +7,11 @@ const routes: Routes = [
         path: 'user',
         loadChildren: './modules/user/user.module#UserModule'
     },
+    {
+        path: 'offer',
+        pathMatch: 'prefix',
+        loadChildren: './modules/offer/offer.module#OfferModule'
+    },
     {path: '**', component: MainPageComponent}
 ];
 

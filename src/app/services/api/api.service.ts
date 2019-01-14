@@ -48,6 +48,10 @@ export class ApiService {
         return this.http.get('/api/offer/popular').toPromise();
     }
 
+    public getOffer(id: number): Promise<OfferModel> {
+        return this.http.get('/api/offer/get-offer/' + id).toPromise() as Promise<OfferModel>;
+    }
+
     public getEditOfferData(id: number): Promise<object> {
         return this.http.get('/api/offer/get-edit-data/' + id).toPromise();
     }
@@ -67,4 +71,40 @@ export class ApiService {
     getBMVData(): Promise<object> {
         return this.http.get('/api/brand-model-version').toPromise();
     }
+}
+
+export class SimpleUserModel {
+    id: string;
+    name: string;
+    phone: string;
+    longitude: number;
+    latitude: number;
+    address: string;
+}
+
+export class OfferModel {
+
+    name: string;
+    brand: string;
+    model: string;
+    version: string;
+    price: number;
+    afterAccident: boolean;
+    used: boolean;
+    doors: string;
+    fuelType: string;
+    meterStatus: number;
+    enginePower: number;
+    engineCapacity: number;
+    gearbox: string;
+    productionYear: number;
+    bodyColor: string;
+    bodyType: string;
+    description: string;
+    createData: string;
+    expireData: string;
+    visitCounter: number;
+    equipments: string[];
+    photos: string[];
+    user: SimpleUserModel;
 }

@@ -179,3 +179,55 @@ div.price {
 .dz-size {
     display: none;
 }
+
+.offer_info {
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px 30px;
+}
+
+.offer_nav {
+    background: aliceblue;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 3px 30px;
+    width: 95% !important;
+}
+
+.offer_basic_info {
+    color: #016fa8;
+}
+
+.offer_basic_info b {
+    color: #000;
+}
+
+.offer-photo {
+    height: 500px;
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+    .offer-photo    {
+        height: 350px;
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    offer-photo    {
+        height: 250px;
+    }
+}
+
+/* Landscape phones and down */
+@media (max-width: 360px) {
+    offer-photo    {
+        height: 200px;
+    }
+}

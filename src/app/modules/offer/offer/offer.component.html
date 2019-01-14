@@ -1,3 +1,109 @@
-<p>
-  offer works!
-</p>
+<div class="container">
+  <div *ngIf="offer">
+    <div class="row offer_info">
+      <div class="col">{{offer.name}}</div>
+      <div class="col text-right">{{offer.price}} zł</div>
+    </div>
+    <div class="container offer_nav">
+      Strona główna > {{offer.brand}} > {{offer.model}} > {{offer.version}}
+    </div>
+
+    <br />
+    <div class="row">
+      <div class="col col-lg-3 col-md-12">
+          <div class="card">
+            <div class="card-header">
+              Sprzedający: <b>{{offer.user.name}}</b>
+            </div>
+            <div class="card-body">
+              <small>{{offer.user.address}}</small>
+            </div>
+            <div class="card-footer">
+              Telefon: <b>{{offer.user.phone}}</b>
+            </div>
+          </div>
+      </div>
+      <div class="col col-lg-9 col-md-12">
+        <swiper [config]="config" style="width: 100%;">
+          <div *ngFor="let item of offer.photos">
+            <img [src]="'/storage/' + item" alt="{{ offer.name }}" class="card-img-top offer-photo" style="width: 100%;"/>
+          </div>
+        </swiper>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="card">
+      <div class="card-header" style="line-height: 28px;">
+        <strong>Podstawowe informacje:</strong>
+        <br />
+        <br />
+        <div class="row offer_basic_info">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Marka: </b> {{offer.brand}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Model: </b> {{offer.model}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Wersja: </b> {{offer.version}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Rok produkcji: </b> {{offer.productionYear}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Przebieg: </b> {{offer.meterStatus}} km
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Moc silnika: </b> {{offer.enginePower}} KM
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Pojemność silnika: </b> {{offer.engineCapacity}} cm<sub>3</sub>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Skrzynia biegów: </b> {{offer.gearbox}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Rodzaj paliwa: </b> {{offer.fuelType}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Nadwozie: </b> {{offer.bodyType}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Kolor: </b> {{offer.bodyColor}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Drzwi: </b> {{offer.doors}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Uszkodzony: </b> {{offer.afterAccident ? 'Tak' : 'Nie'}}
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <b>Używany: </b> {{offer.used ? 'Tak' : 'Nie'}}
+          </div>
+        </div>
+      </div>
+      <div class="card-body" style="font-weight: normal;">
+        <strong>Wyposażenie:</strong>
+        <br />
+        <br />
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let item of offer.equipments">
+            <i class="fas fa-check"></i> {{item}}
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <strong>Opis:</strong>
+        <br />
+        <br />
+        <div style="line-height: 8px;" [innerHTML]="offer.description"></div>
+      </div>
+    </div>
+    <div class="text-sm-right" style="padding: 10px 15px;">Wyświetlenia: {{offer.visitCounter}}</div>
+    <br /><br />
+
+    </div>
+  <app-loader [visible]="!loaded"></app-loader>
+</div>

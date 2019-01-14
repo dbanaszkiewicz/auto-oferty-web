@@ -141,7 +141,6 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            {{form.bodyColor}}
                             <ng-select [(ngModel)]="form.bodyColor" placeholder="Wybierz kolor karoserii"  [clearable]="false"
                                        [ngClass]="{'is-invalid': formErrors.bodyColor}"
                                        name="bodycolor">
@@ -150,7 +149,6 @@
                             <div class="invalid-feedback" *ngFor="let err of formErrors.bodyColor">{{err}}</div>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            {{form.bodyType}}
                             <ng-select [(ngModel)]="form.bodyType" placeholder="Wybierz rodzaj nadwozia" [clearable]="false"
                                        [ngClass]="{'is-invalid': formErrors.bodyType}"
                                        name="bodytype">
@@ -183,7 +181,7 @@
                     <dropzone [config]="dropzoneConfig" [message]="'Click or drag images here to upload'" (success)="onUploadSuccess($event)" (removedFile)="onRemoveFile($event)"></dropzone>
                 </div>
                 <div class="card-body text-center" *ngIf="offerId === 0">
-                    Możliwość dodania zdjęćpojawi się po kliknięciu przycisku dodaj ofertę!
+                    Możliwość dodania zdjęć pojawi się po kliknięciu przycisku dodaj ofertę!
                 </div>
             </div>
 
@@ -193,7 +191,10 @@
 
     <!-- register button -->
     <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-            type="submit">Dodaj ofertę
+            type="submit" *ngIf="offerId == 0">Dodaj ofertę
+    </button>
+    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+            type="submit" *ngIf="offerId >0">Zaktualizuj ofertę
     </button>
     <app-loader [visible]="loading"></app-loader>
 </form>
