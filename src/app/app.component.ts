@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {UserData, UserService} from './services/user.service';
 import {AlertsComponent, AlertsModule, AlertsService} from 'angular-alert-module';
 import {AlertsConfigData} from 'angular-alert-module/lib/alerts.config';
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -15,7 +16,10 @@ export class AppComponent {
     user: UserData = new UserData();
     isLogged;
 
-    constructor(private userService: UserService, private alerts: AlertsService) {
+    constructor(
+        private userService: UserService,
+        private alerts: AlertsService,
+        private router: Router) {
         this.userService.fetchUserData().then(() => {
             this.updateUserInfoFromService();
         }).catch(reason => {
@@ -58,6 +62,8 @@ export class AppComponent {
         }).catch(reason => {
             console.error(reason);
         });
+
+        this.router.navigate(['/'], {queryParams: []} as NavigationExtras);
     }
 
     private updateUserInfoFromService() {

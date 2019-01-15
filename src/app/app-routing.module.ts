@@ -12,6 +12,11 @@ const routes: Routes = [
         pathMatch: 'prefix',
         loadChildren: './modules/offer/offer.module#OfferModule'
     },
+    {
+        path: 'find',
+        pathMatch: 'prefix',
+        loadChildren: './modules/list/list.module#ListModule'
+    },
     {path: '**', component: MainPageComponent}
 ];
 

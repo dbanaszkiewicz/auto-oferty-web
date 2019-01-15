@@ -16,6 +16,7 @@ import {UserService} from './services/user.service';
 import {FormModule} from './modules/form/form.module';
 import {ModalsModule} from './modals/modals.module';
 import {BMVService} from './services/b-m-v.service';
+import {ComponentsModule} from './components/components.module';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import {BMVService} from './services/b-m-v.service';
         HttpClientModule,
         FormModule,
         AlertsModule.forRoot(),
-        ModalsModule
+        ModalsModule,
+        ComponentsModule
     ],
     providers: [
         ApiService,

@@ -1,0 +1,151 @@
+<div class="container">
+<br /><br />
+    <div class="card">
+        <div class="card-header">
+            <form>
+                <div class="row">
+                    <div class="col col-sm-12 col-md-12">
+                        <div class="md-form">
+                            <input type="text" (change)="reload()" id="input" class="form-control" name="offerName" [(ngModel)]="form.name"
+                            >
+                            <label for="input">Nazwa oferty</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <ng-select (change)="onChangeBrand()" (clear)="onChangeBrand()" [disabled]="brands == null"
+                                   [clearable]="false"
+                                   [(ngModel)]="form.brand" [addTag]="true" placeholder="Wybierz markę" name="brand">
+                            <ng-option [value]="0">Wszystkie marki</ng-option>
+                            <ng-option *ngFor="let item of brands" [value]="item.id">{{item.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <ng-select (change)="onChangeModel()" (clear)="onChangeModel()" [disabled]="form.brand == null"
+                                   [clearable]="false"
+                                   [(ngModel)]="form.model" [addTag]="true" placeholder="Wybierz model" name="model">
+                            <ng-option [value]="0">Wszystkie modele</ng-option>
+                            <ng-option *ngFor="let item of models" [value]="item.id">{{item.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <ng-select (change)="reload()" [disabled]="form.model == null" [addTag]="true" [(ngModel)]="form.version"
+                                   [clearable]="false"
+                                   placeholder="Wybierz wersję"
+                                   name="version">
+                            <ng-option [value]="0">Wszystkie wersje</ng-option>
+                            <ng-option *ngFor="let item of versions" [value]="item.id">{{item.name}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="pricefrom" class="form-control" name="pricefrom"
+                                   [(ngModel)]="form.priceFrom"
+                            >
+                            <label for="pricefrom">Cena od</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="priceto" class="form-control" name="priceto"
+                                   [(ngModel)]="form.priceTo"
+                            >
+                            <label for="priceto">Cena do</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="meterfrom" class="form-control" name="meterfrom"
+                                   [(ngModel)]="form.meterStatusFrom"
+                            >
+                            <label for="meterfrom">Przebieg od</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="meterfromt" class="form-control" name="meterfromt"
+                                   [(ngModel)]="form.meterStatusTo"
+                            >
+                            <label for="meterfromt">Przebieg do</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="epf" class="form-control" name="epf"
+                                   [(ngModel)]="form.enginePowerFrom"
+                            >
+                            <label for="epf">Moc silnika od (w KM)</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="epft" class="form-control" name="epft"
+                                   [(ngModel)]="form.enginePowerTo"
+                            >
+                            <label for="epft">Moc silnika do (w KM)</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="productionfrom" class="form-control" name="productionfrom"
+                                   [(ngModel)]="form.productionYearFrom"
+                            >
+                            <label for="productionfrom">Rok produkcji od</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="md-form">
+                            <input (change)="reload()" type="number" id="productionfromt" class="form-control" name="productionfromt"
+                                   [(ngModel)]="form.productionYearTo"
+                            >
+                            <label for="productionfromt">Rok produkcji do</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped offers" [mfData]="offers" #mf="mfDataTable" [mfRowsOnPage]="10">
+                <tbody>
+                <tr *ngFor="let offer of mf.data">
+                    <td>
+                        <img style="width: 220px;height: 165px;object-fit: cover;" *ngIf="offer.photo" [routerLink]="'/offer/' + offer.id"
+                             [src]="'/storage/' + offer.photo" alt="{{offer.name}}">
+                    </td>
+                    <td class="align-middle text-left"><h4 [routerLink]="'/offer/' + offer.id">{{offer.name}}</h4></td>
+                    <td class="align-middle text-left">
+                        <b>Rodzaj paliwa:</b> {{offer.fuelType}}<br />
+                        <b>Moc silnika:</b> {{offer.enginePower}} KM<br />
+                        <b>Rok produkcji:</b> {{offer.productionYear}}<br />
+                        <b>Przebieg:</b> {{offer.meterStatus}} km<br />
+                    </td>
+                    <td class="align-middle text-center"><h2>{{offer.price}} zł</h2></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[10,25,50]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="card-footer">
+
+        </div>
+    </div>
+
+
+    <app-loader [visible]="loading"></app-loader>
+</div>

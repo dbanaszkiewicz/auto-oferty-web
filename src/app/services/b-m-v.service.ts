@@ -35,9 +35,11 @@ export class BMVService {
 
     getVersionsByBrandIdModelId(brandId: string, modelId: string): Array<IVersion> {
         const brand = this.findBrandById(brandId);
-        for (const model of brand.models) {
-            if (model.id === modelId) {
-                return model.versions;
+        if (brand !== null && brand.models) {
+            for (const model of brand.models) {
+                if (model.id === modelId) {
+                    return model.versions;
+                }
             }
         }
 

@@ -231,3 +231,7 @@ div.price {
         height: 200px;
     }
 }
+
+.offers td {
+    padding: 0 !important;
+}

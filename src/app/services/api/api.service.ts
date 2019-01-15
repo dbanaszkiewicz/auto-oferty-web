@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {ShortOfferInfo} from '../../components/main-page/main-page.component';
 
 @Injectable({
     providedIn: 'root'
@@ -52,6 +53,10 @@ export class ApiService {
         return this.http.get('/api/offer/get-offer/' + id).toPromise() as Promise<OfferModel>;
     }
 
+    public findOffers(data: any): Promise<ShortOfferInfo[]> {
+        return this.http.post('/api/offer/find', data).toPromise() as Promise<ShortOfferInfo[]>;
+    }
+
     public getEditOfferData(id: number): Promise<object> {
         return this.http.get('/api/offer/get-edit-data/' + id).toPromise();
     }
@@ -67,7 +72,7 @@ export class ApiService {
     getEquipments(): Promise<object> {
         return this.http.get('/api/equipment/get').toPromise();
     }
-    
+
     getBMVData(): Promise<object> {
         return this.http.get('/api/brand-model-version').toPromise();
     }

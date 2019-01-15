@@ -5,7 +5,7 @@
       <div class="col text-right">{{offer.price}} zł</div>
     </div>
     <div class="container offer_nav">
-      Strona główna > {{offer.brand}} > {{offer.model}} > {{offer.version}}
+      <a [routerLink]="'/'">Strona główna</a> > <a [routerLink]="'/find/' + offer.brandId">{{offer.brand}}</a> > <a [routerLink]="'/find/' + offer.brandId + '/' + offer.modelId">{{offer.model}}</a> > <a [routerLink]="'/find/' + offer.brandId + '/' + offer.modelId + '/' + offer.versionId">{{offer.version}}</a>
     </div>
 
     <br />

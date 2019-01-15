@@ -8,22 +8,32 @@
 <div class="container">
     <div class="row">
         <div class="col-xl-3 col-md-3 col-sm-6">
-            <ng-select (change)="onChangeBrand()" (clear)="onChangeBrand()" [disabled]="brands == null" [(ngModel)]="brand" placeholder="Wybierz markę">
+            <ng-select (change)="onChangeBrand()" (clear)="onChangeBrand()" [disabled]="brands == null"
+                       [clearable]="false"
+                       [(ngModel)]="form.brand" [addTag]="true" placeholder="Wybierz markę" name="brand">
+                <ng-option [value]="0">Wszystkie marki</ng-option>
                 <ng-option *ngFor="let item of brands" [value]="item.id">{{item.name}}</ng-option>
             </ng-select>
         </div>
         <div class="col-xl-3 col-md-3 col-sm-6">
-            <ng-select (change)="onChangeModel()" (clear)="onChangeModel()" [disabled]="models == null" [(ngModel)]="model" placeholder="Wybierz model">
+            <ng-select (change)="onChangeModel()" (clear)="onChangeModel()" [disabled]="form.brand == null"
+                       [clearable]="false"
+                       [(ngModel)]="form.model" [addTag]="true" placeholder="Wybierz model" name="model">
+                <ng-option [value]="0">Wszystkie modele</ng-option>
                 <ng-option *ngFor="let item of models" [value]="item.id">{{item.name}}</ng-option>
             </ng-select>
         </div>
         <div class="col-xl-3 col-md-3 col-sm-6">
-            <ng-select [disabled]="versions == null" [(ngModel)]="version" placeholder="Wybierz wersję">
+            <ng-select [disabled]="form.model == null" [addTag]="true" [(ngModel)]="form.version"
+                       [clearable]="false"
+                       placeholder="Wybierz wersję"
+                       name="version">
+                <ng-option [value]="0">Wszystkie wersje</ng-option>
                 <ng-option *ngFor="let item of versions" [value]="item.id">{{item.name}}</ng-option>
             </ng-select>
         </div>
         <div class="col-xl-3 col-md-3 col-sm-6">
-            <button class="btn btn-dark form-control" style="margin-top: 15px;">Szukaj!</button>
+            <button class="btn btn-dark form-control" (click)="find()" style="margin-top: 15px;">Szukaj!</button>
         </div>
     </div>
 </div>
